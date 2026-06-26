@@ -6,7 +6,7 @@ exports.handler = async function(event, context) {
   try {
     let url = callId
       ? `https://api.vapi.ai/call/${callId}`
-      : `https://api.vapi.ai/call?limit=100&assistantId=${ASSISTANT_ID}`;
+      : `https://api.vapi.ai/call?limit=20&assistantId=${ASSISTANT_ID}`;
 
     const res = await fetch(url, {
       headers: { 'Authorization': `Bearer ${VAPI_API_KEY}` }
