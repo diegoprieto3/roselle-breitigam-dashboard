@@ -614,7 +614,7 @@ async function loadArchive() {
 }
 async function fetchCallDetail(id) {
   try {
-    const res = await fetch(`https://api.vapi.ai/call/${id}`, { headers:{'Authorization':'Bearer '+API_KEY} });
+   const res = await fetch(`/.netlify/functions/calls?callId=${id}`);
     if (!res.ok) return null;
     return await res.json();
   } catch(e) { return null; }
@@ -622,7 +622,7 @@ async function fetchCallDetail(id) {
 async function loadCalls() {
   document.getElementById('call-list').innerHTML = '<div class="loading-state"><span class="spin">↻</span> Loading calls...</div>';
   try {
-    const res = await fetch(`https://api.vapi.ai/call?limit=100&assistantId=${ASSISTANT_ID}`, { headers:{'Authorization':'Bearer '+API_KEY} });
+    const res = await fetch(`/.netlify/functions/calls`);
     if (!res.ok) throw new Error('API returned '+res.status);
     const data = await res.json();
     const calls = Array.isArray(data) ? data : (data.results||data.calls||[]);
