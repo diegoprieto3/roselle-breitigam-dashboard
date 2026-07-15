@@ -308,14 +308,11 @@ async function loadRecording(audioId, callId) {
   try {
     const res = await fetch(`/.netlify/functions/recording?callId=${callId}`);
     if (!res.ok) throw new Error('Error ' + res.status);
-    const data = await res.json();
-    if (data.url) {
-      audio.src = data.url;
-      audio.play();
-      if (btn) btn.style.display = 'none';
-    } else {
-      throw new Error('No URL');
-    }
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    audio.src = url;
+    audio.play();
+    if (btn) btn.style.display = 'none';
   } catch(e) {
     if (btn) btn.textContent = 'Error loading';
   }
